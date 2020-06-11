@@ -130,7 +130,7 @@ public class Pager {
 	
 	
 	public String getKind() {
-		if(this.kind==null) {
+		if(this.kind==null || this.kind.equals("")) {
 			this.kind="title";
 		}
 		return kind;

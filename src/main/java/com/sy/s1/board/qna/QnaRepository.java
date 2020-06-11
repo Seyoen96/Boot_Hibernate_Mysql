@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QnaRepository extends JpaRepository<QnaVO, Long> {
 	
-	public Page<QnaVO> findAllOrderByNumDesc(Pageable pageable);
-	
-	public Page<QnaVO> findByTitleContainingOrderByNumDesc(Pageable pageable, String search);
-	public Page<QnaVO> findByWriterContainingOrderByNumDesc(Pageable pageable, String search);
-	public Page<QnaVO> findByContentsContainingOrderByNumDesc(Pageable pageable, String search);
+	// title 검색
+	Page<QnaVO> findByTitleContaining(String search, Pageable pageable);
+	// contents
+	Page<QnaVO> findByContentsContaining(String search, Pageable pageable);
+	// writer
+	Page<QnaVO> findByWriterContaining(String search, Pageable pageable);
 
 }

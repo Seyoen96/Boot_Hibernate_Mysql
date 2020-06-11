@@ -76,7 +76,7 @@
 	
 	
 	
-		<div>
+		<div style="float: left;">
 			<span><a href="#" class="pager" title="0">&lt;&lt;</a></span>
 			<span><a href="#" class="pager" title="${page.number-1}"> &lt;</a></span>
 			<c:forEach begin="${page.number}" end="${page.number+4}" var="i">

@@ -6,7 +6,9 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -33,27 +35,11 @@ public class QnaController {
 	
 	
 	@GetMapping("qnaList")
-	public ModelAndView boardList(@PageableDefault(size = 10, page = 0, direction = Direction.DESC) Pageable pageable,String kind, String search) throws Exception {
+	public ModelAndView boardList(Pager pager) throws Exception {
 //															  page = 0 이 첫번째 페이지
 		ModelAndView mv = new ModelAndView();
-		System.out.println("kind: "+kind);
-		System.out.println("search: "+search);
-		if(search==null) {
-			search = "";
-		}
-		Page<QnaVO> page = qnaService.boardList(pageable,kind,search);
 		
-//		System.out.println(page.getContent().size());
-//		System.out.println(page.getSize());
-//		System.out.println("Elements: "+page.getTotalElements());
-//		System.out.println("TotalPage: "+page.getTotalPages());
-//		// 다음 페이지가 존재하는지 여부   hasNext
-//		System.out.println("hasNext: "+page.hasNext());
-//		System.out.println("hasPrevious: "+page.hasPrevious());
-//		System.out.println("hasContent: "+page.hasContent());
-//		System.out.println("First: "+page.isFirst());
-//		System.out.println("Last: "+page.isLast());
-			
+		Page<QnaVO> page = qnaService.boardList(pager);	
 		
 		int lastPage = page.getTotalPages()-1;
 		mv.addObject("page", page);
