@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+span{
+	float: left;
+}
+
+</style>
 <c:import url="../template/boot.jsp"></c:import>
 </head>
 <body>
@@ -15,7 +21,7 @@
 <div class="container">
 	<h2> ${board} List </h2>
 	<form action="./${board}List" id="frm" class="form-inline" style="margin-bottom: 8px;">
-		<input type="hidden" name="page" id="p"> 
+		<input type="hidden" name="curPage" id="p"> 
 		 <div class="input-group input-group-sm col-xs-2">
 		    <select class="form-control" id="sel1" name ="kind">
 				   <option id="title" value="title">Title</option>
@@ -82,12 +88,11 @@
 			<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
 				
 				<c:if test="${i lt page.totalPages}">
-					<a href="#" class="pager" title="${i}">${i+1}</a>
+					<span><a href="#" class="pager" title="${i}">${i+1}</a></span>
 				</c:if>
 			</c:forEach>
 			<span><a href="#" class="pager" title="${page.number+1}">&gt;</a></span>
 			<span><a href="#" class="pager" title="${page.totalPages-1}">&gt;&gt;</a></span>
-			
 		</div>
 	
 	  
