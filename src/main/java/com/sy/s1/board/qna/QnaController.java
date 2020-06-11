@@ -33,10 +33,15 @@ public class QnaController {
 	
 	
 	@GetMapping("qnaList")
-	public ModelAndView boardList(@PageableDefault(size = 10, page = 0, direction = Direction.DESC) Pageable pageable) throws Exception {
+	public ModelAndView boardList(@PageableDefault(size = 10, page = 0, direction = Direction.DESC) Pageable pageable,String kind, String search) throws Exception {
 //															  page = 0 이 첫번째 페이지
 		ModelAndView mv = new ModelAndView();
-		Page<QnaVO> page = qnaService.boardList(pageable);
+		System.out.println("kind: "+kind);
+		System.out.println("search: "+search);
+		if(search==null) {
+			search = "";
+		}
+		Page<QnaVO> page = qnaService.boardList(pageable,kind,search);
 		
 //		System.out.println(page.getContent().size());
 //		System.out.println(page.getSize());
@@ -48,18 +53,16 @@ public class QnaController {
 //		System.out.println("hasContent: "+page.hasContent());
 //		System.out.println("First: "+page.isFirst());
 //		System.out.println("Last: "+page.isLast());
+			
 		
-				
 		int lastPage = page.getTotalPages()-1;
 		mv.addObject("page", page);
 		mv.setViewName("board/boardList");
 		
-		if(page.getNumber() >= lastPage) {
-			// 마지막 페이지보다 큰 페이지 수를 입력한 경우
-			mv.setViewName("redirect:./qnaList?page=0");
-			
+		if(page.getNumber() > lastPage) {
+			// 마지막 페이지보다 큰 페이지 수를 입력한 경우 처리
+			mv.setViewName("redirect:./qnaList?page=0");	
 		}
-		
 		return mv;
 	}
 	

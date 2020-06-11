@@ -56,7 +56,7 @@ class NoticeRepositoryTest {
 		for(int i =1; i<20;i++) {
 			NoticeVO noticeVO = new NoticeVO();
 			noticeVO.setContents("contents"+i);
-			noticeVO.setHit(0);
+//			noticeVO.setHit(0);
 			noticeVO.setTitle("title"+i);
 			noticeVO.setWriter("writer"+i);
 			noticeVO = noticeRepository.save(noticeVO);

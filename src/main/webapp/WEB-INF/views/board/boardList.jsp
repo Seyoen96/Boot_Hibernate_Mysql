@@ -13,22 +13,23 @@
 
 
 <div class="container">
-	<h2> ${board} ${path} </h2>
-	<form action="./${board}List" class="form-inline" style="margin-bottom: 8px;">
-		    <div class="input-group input-group-sm col-xs-2">
-		    	<select class="form-control" id="sel1" name ="kind">
-				    <option value="title">Title</option>
-				    <option value="contents">Contents</option>
-				    <option value="writer">Writer</option>
-				  </select>
-		  </div>
-		    <div class="input-group input-group-sm col-xs-4">
-		      <input type="text" class="form-control" placeholder="Search" name="search">
-		      <div class="input-group-btn">
+	<h2> ${board} List </h2>
+	<form action="./${board}List" id="frm" class="form-inline" style="margin-bottom: 8px;">
+		<input type="hidden" name="page" id="p"> 
+		 <div class="input-group input-group-sm col-xs-2">
+		    <select class="form-control" id="sel1" name ="kind">
+				   <option id="title" value="title">Title</option>
+				   <option id="contents" value="contents">Contents</option>
+				   <option id="writer" value="writer">Writer</option>
+			</select>
+		 </div>
+		 <div class="input-group input-group-sm col-xs-4">
+		     <input type="text" class="form-control" placeholder="Search" name="search" value="${param.search}">
+		     <div class="input-group-btn">
 		        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 		      </div>
-		    </div>
-		  </form>
+		 </div>
+	</form>
 		  
 	<table class="table table-hover">
 		<tr>
@@ -75,39 +76,19 @@
 	
 	
 	
-	<div>
-	
-	<p>
-	<span><a href="./${board}List?page=0">&lt;&lt;</a></span>
-	<span><a href="./${board}List?page=${page.number-1}">&lt;</a></span>
-	
-	<c:if test="${page.number+4 le page.totalPages-1}">
-		<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
-		<a href="./${board}List?page=${i}">${i+1}</a>
-		</c:forEach>
-	</c:if>
-	<c:if test="${page.number+4 gt page.totalPages-1}">
-		<c:forEach begin="${page.number}" end="${page.totalPages-1}" var="i">
-		<a href="./${board}List?page=${i}">${i+1}</a>
-		</c:forEach>
-	</c:if>
-	<span><a href="./${board}List?page=${page.number+1}">&gt;</a></span>
-	
-	<span><a href="./${board}List?page=${page.totalPages-1}">&gt;&gt;</a></span>
-	</p>
-	
-	
-	<hr>	
-	<c:if test="${not page.isFirst()}">
-	<a href="./${board}List?page=${page.number-1}">[이전] </a>
-	</c:if>
-	
-		<span>${page.number+1}</span>
-	
-	<c:if test="${not page.isLast()}">	
-	<a href="./${board}List?page=${page.number+1}"> [다음]</a>
-	</c:if>
-	</div>
+		<div>
+			<span><a href="#" class="pager" title="0">&lt;&lt;</a></span>
+			<span><a href="#" class="pager" title="${page.number-1}"> &lt;</a></span>
+			<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
+				
+				<c:if test="${i lt page.totalPages}">
+					<a href="#" class="pager" title="${i}">${i+1}</a>
+				</c:if>
+			</c:forEach>
+			<span><a href="#" class="pager" title="${page.number+1}">&gt;</a></span>
+			<span><a href="#" class="pager" title="${page.totalPages-1}">&gt;&gt;</a></span>
+			
+		</div>
 	
 	  
 	<a href="./${board}Write" class="btn btn-danger" style="float: right;">Write</a>
@@ -116,11 +97,20 @@
 
 <script type="text/javascript">
 
+	$(".pager").click(function(){
+		var page=$(this).attr("title");
+		$("#p").val(page);
+		$("#frm").submit();
+	});
 	
+	var kind = '${param.kind}';
+	if(kind == ''){
+		$("#title").prop("selected",true);
+	} else{
+		$("#"+kind).prop("selected",true)
+	}
 
 	var result = '${result}';
-	//var msg = '${msg}';
-	
 	if(result != ''){
 		if(result == '1'){
 			alert("success");

@@ -35,7 +35,7 @@ public class BoardVO {
 //	@UpdateTimestamp		// update 시 시간
 	private Date regDate;
 	@Column
-	private long hit;
+	private Long hit;
 	
 
 }

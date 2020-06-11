@@ -22,11 +22,11 @@ import lombok.EqualsAndHashCode;
 public class QnaVO extends BoardVO{
 	
 	@Column
-	private long ref;
+	private Long ref;
 	@Column
-	private long step;
+	private Long step;
 	@Column
-	private long depth;
+	private Long depth;
 	
 	// mappedBy에는 변수명을 넣어줌
 	@OneToMany(mappedBy = "qnaVO", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
