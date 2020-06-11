@@ -39,7 +39,8 @@
 			<td>Hit</td>
 		</tr>
 		
-		<c:forEach items="${list}" var="vo">
+		<!-- Page로 보냈을 때  page.content로 값 꺼내오기 -->
+		<c:forEach items="${page.content}" var="vo">
 		<tr>
 			<td>${vo.num}</td>
 			<td>
@@ -58,7 +59,7 @@
 	</table>
 	
 	
-	<ul class="pagination">
+	<%-- <ul class="pagination">
 		<c:catch>
 		<c:if test="${pager.curBlock gt 1}">
 			<li><a href="./${board}List?curPage=${pager.startNum-1}">이전</a></li>
@@ -70,7 +71,44 @@
 			<li><a href="./${board}List?curPage=${pager.lastNum+1}">다음</a></li>
 		</c:if>
 		</c:catch>
-	</ul>
+	</ul> --%>
+	
+	
+	
+	<div>
+	
+	<p>
+	<span><a href="./${board}List?page=0">&lt;&lt;</a></span>
+	<span><a href="./${board}List?page=${page.number-1}">&lt;</a></span>
+	
+	<c:if test="${page.number+4 le page.totalPages-1}">
+		<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
+		<a href="./${board}List?page=${i}">${i+1}</a>
+		</c:forEach>
+	</c:if>
+	<c:if test="${page.number+4 gt page.totalPages-1}">
+		<c:forEach begin="${page.number}" end="${page.totalPages-1}" var="i">
+		<a href="./${board}List?page=${i}">${i+1}</a>
+		</c:forEach>
+	</c:if>
+	<span><a href="./${board}List?page=${page.number+1}">&gt;</a></span>
+	
+	<span><a href="./${board}List?page=${page.totalPages-1}">&gt;&gt;</a></span>
+	</p>
+	
+	
+	<hr>	
+	<c:if test="${not page.isFirst()}">
+	<a href="./${board}List?page=${page.number-1}">[이전] </a>
+	</c:if>
+	
+		<span>${page.number+1}</span>
+	
+	<c:if test="${not page.isLast()}">	
+	<a href="./${board}List?page=${page.number+1}"> [다음]</a>
+	</c:if>
+	</div>
+	
 	  
 	<a href="./${board}Write" class="btn btn-danger" style="float: right;">Write</a>
 	
