@@ -35,7 +35,7 @@ public class NoticeService {
 		long totalCount = noticeRepository.count();
 		
 		List<NoticeVO> ar = new ArrayList<NoticeVO>();
-		Pageable pageable = PageRequest.of((int)pager.getStartRow(), 10, Sort.Direction.DESC, "num");
+		Pageable pageable = PageRequest.of((int)pager.getStartRow(), (int)pager.getPerPage(), Sort.Direction.DESC, "num");
 		
 		if(pager.getKind().equals("writer")) {
 			ar = noticeRepository.findByWriterContainingOrderByNumDesc(pageable,pager.getSearch());
