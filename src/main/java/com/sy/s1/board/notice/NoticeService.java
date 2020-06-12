@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sy.s1.board.BoardVO;
+import com.sy.s1.board.qna.QnaVO;
 import com.sy.s1.member.MemberFileVO;
 import com.sy.s1.util.FileManager;
 import com.sy.s1.util.FilePathGenerator;
@@ -29,27 +30,23 @@ public class NoticeService {
 	private FilePathGenerator filePathGenerator;
 	
 	// Pageable pageable,String search
-	public List<NoticeVO> getSelectList(Pager pager) throws Exception {	
+	public Page<NoticeVO> getSelectList(Pager pager) throws Exception {	
 		pager.makeRow();
 		// 검색 결과만 카운트 해오기
-		long totalCount = noticeRepository.count();
+		// long totalCount = noticeRepository.count();
 		
-		List<NoticeVO> ar = new ArrayList<NoticeVO>();
 		Pageable pageable = PageRequest.of((int)pager.getStartRow(), (int)pager.getSize(), Sort.Direction.DESC, "num");
 		
-		if(pager.getKind().equals("writer")) {
-			ar = noticeRepository.findByWriterContainingOrderByNumDesc(pageable,pager.getSearch());
-			totalCount = noticeRepository.countByWriterContaining(pager.getSearch());
+		Page<NoticeVO> page = null;
+		if(pager.getKind().equals("title")) {
+			page = noticeRepository.findByTitleContaining(pager.getSearch(), pageable);
 		} else if(pager.getKind().equals("contents")) {
-			ar = noticeRepository.findByContentsContainingOrderByNumDesc(pageable,pager.getSearch());
-			totalCount = noticeRepository.countByContentsContaining(pager.getSearch());
-		} else if(pager.getKind().equals("title")) {
-			ar = noticeRepository.findByTitleContainingOrderByNumDesc(pageable,pager.getSearch());
-			totalCount = noticeRepository.countByTitleContaining(pager.getSearch());
-		}		
-//		pager.makePage(totalCount);
-		
-		return ar;
+			page = noticeRepository.findByContentsContaining(pager.getSearch(), pageable);
+		} else {
+			page = noticeRepository.findByWriterContaining(pager.getSearch(), pageable);
+		}
+		pager.makePage(page.getTotalPages());
+		return page;
 	}
 	
 	

@@ -2,8 +2,11 @@ package com.sy.s1.board.notice;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.sy.s1.board.qna.QnaVO;
 
 public interface NoticeRepository extends JpaRepository<NoticeVO, Long>{
 	
@@ -14,6 +17,7 @@ public interface NoticeRepository extends JpaRepository<NoticeVO, Long>{
 	// select * from notice where num between 6 and 10
 	public List<NoticeVO> findByNumBetweenOrderByNumDesc(long start, long end);
 	
+	/*
 	// 검색어로 찾아오기 + pageable
 	// select * from notice where title like?? order by num desc
 	public List<NoticeVO> findByTitleContainingOrderByNumDesc(Pageable pageable,String search);
@@ -21,6 +25,14 @@ public interface NoticeRepository extends JpaRepository<NoticeVO, Long>{
 	public List<NoticeVO> findByContentsContainingOrderByNumDesc(Pageable pageable,String search);
 	// writer
 	public List<NoticeVO> findByWriterContainingOrderByNumDesc(Pageable pageable,String search);
+	*/
+	
+	// title 검색
+	Page<NoticeVO> findByTitleContaining(String search, Pageable pageable);
+	// contents
+	Page<NoticeVO> findByContentsContaining(String search, Pageable pageable);
+	// writer
+	Page<NoticeVO> findByWriterContaining(String search, Pageable pageable);
 	
 	// totalCount by title
 	public int countByTitleContaining(String search);

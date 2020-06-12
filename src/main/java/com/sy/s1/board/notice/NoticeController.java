@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,12 +42,14 @@ public class NoticeController {
 	public ModelAndView getSelectList(Pager pager) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		//								  (page,size,Sort,column)
-//		PageRequest.of(page, size);
-//		pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "num");
-		List<NoticeVO> ar = noticeService.getSelectList(pager);
-		mv.addObject("list", ar);
+		//PageRequest.of(page, size);
+		//pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "num");
+		
+		Page<NoticeVO> page = noticeService.getSelectList(pager);
+
+		mv.addObject("page", page);
 		mv.addObject("path", "List");
-//		mv.addObject("pager", pager);
+		mv.addObject("pager", pager);
 		mv.setViewName("board/boardList");
 		return mv;
 	}
