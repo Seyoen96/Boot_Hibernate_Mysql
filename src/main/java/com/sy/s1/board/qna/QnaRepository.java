@@ -34,12 +34,13 @@ public interface QnaRepository extends JpaRepository<QnaVO, Long> {
 	@Query(nativeQuery = true, value = "update qna set title=?1")
 	void qnaUpdate2(String title,String contents, Long num);
 	
+	/*
 	@Query("select q QnaVO q where q.num=:num")
 	QnaVO qnaSelect(Long num);
 	
 	@Query("select q.title, q.writer from QnaVO q where q.num=:num")
 	Object[] qnaSelect2(Long num);
-	
+	*/
 	
 	// title 검색
 	Page<QnaVO> findByTitleContaining(String search, Pageable pageable);

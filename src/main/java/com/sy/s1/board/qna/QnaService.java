@@ -128,8 +128,7 @@ public class QnaService {
 	public QnaVO boardSelect (QnaVO qnaVO) throws Exception{
 
 		// hit + 1  update
-		//qnaVO = qnaRepository.findById(qnaVO.getNum()).get();
-		qnaVO = qnaRepository.qnaSelect(qnaVO.getNum());
+		qnaVO = qnaRepository.findById(qnaVO.getNum()).get();
 		qnaVO.setHit(qnaVO.getHit()+1);
 		
 		return qnaRepository.save(qnaVO);
