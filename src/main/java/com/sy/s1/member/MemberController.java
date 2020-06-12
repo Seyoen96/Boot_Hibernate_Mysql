@@ -73,8 +73,6 @@ public class MemberController {
 			// 에러 발생 시
 			mv.setViewName("member/memberJoin");
 		} else {
-			System.out.println("------------error X-----");
-
 			memberVO = memberService.memberJoin(memberVO,files);
 			mv.setViewName("redirect:../");
 		}		

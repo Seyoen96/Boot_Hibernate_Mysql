@@ -34,8 +34,9 @@ public class BoardVO {
 	@CreationTimestamp		// insert 시 시간
 //	@UpdateTimestamp		// update 시 시간
 	private Date regDate;
-	@Column
-	private Long hit;
+	
+	// 아무것도 넣지 않으면 null로 넘어가는 것 해결
+	private long hit;
 	
 
 }

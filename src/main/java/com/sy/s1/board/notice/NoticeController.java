@@ -59,7 +59,7 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView();
 		noticeVO = (NoticeVO)noticeService.getSelectOne(noticeVO);
 		mv.addObject("vo",noticeVO);
-		mv.addObject("noticeFileVOs",noticeVO.getNoticeFileVOs());
+		mv.addObject("noticeFileVOs",noticeVO.getBoardFiles());
 		mv.setViewName("board/boardSelect");
 		return mv;
 	}

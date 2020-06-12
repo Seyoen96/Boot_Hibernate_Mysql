@@ -28,9 +28,15 @@
       </tr>
       </tbody>
 </table>
-<c:forEach items="noticeFileVOs" var="files">
-<img alt="" src="${pageContext.request.contextPath}/resources/upload/notice/${files.fileName}">
-</c:forEach>
+
+	<c:catch>
+	 <c:if test="${not empty files}">
+	 <c:forEach items="boardFiles" var="files">	
+	<img alt="" src="${pageContext.request.contextPath}/resources/upload/notice/${files.fileName}"/>
+	</c:forEach>
+	</c:if>
+ 	</c:catch>
+ 
 
 <c:if test="${board eq 'qna'}">
 <a href="${board}Reply?num=${vo.num}" class="btn btn-info">Reply</a>

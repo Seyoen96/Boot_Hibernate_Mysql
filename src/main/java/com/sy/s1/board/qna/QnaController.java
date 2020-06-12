@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sy.s1.board.notice.NoticeVO;
@@ -49,10 +50,10 @@ public class QnaController {
 		mv.addObject("pager", pager);
 		mv.setViewName("board/boardList");
 		
-		if(page.getNumber() > lastPage) {
-			// 마지막 페이지보다 큰 페이지 수를 입력한 경우 처리
-			mv.setViewName("redirect:./qnaList?page=0");	
-		}
+//		if(page.getNumber() > lastPage) {
+//			// 마지막 페이지보다 큰 페이지 수를 입력한 경우 처리
+//			mv.setViewName("redirect:./qnaList?page=0");	
+//		}
 		return mv;
 	}
 	
@@ -66,9 +67,9 @@ public class QnaController {
 	}
 	
 	@PostMapping("qnaWrite")
-	public ModelAndView boardWrite(QnaVO qnaVO) throws Exception{
+	public ModelAndView boardWrite(QnaVO qnaVO,MultipartFile[] files) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		qnaVO = qnaService.boardWrite(qnaVO);
+		qnaVO = qnaService.boardWrite(qnaVO,files);
 		if(qnaVO!=null) {
 			mv.addObject("result", "write success!");
 			mv.addObject("path", "qnaList");
@@ -80,7 +81,60 @@ public class QnaController {
 		return mv;
 	}
 	
+	@GetMapping("qnaSelect")
+	public ModelAndView boardSelect(QnaVO qnaVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		qnaVO = qnaService.boardSelect(qnaVO);
+
+		mv.addObject("vo", qnaVO);
+		mv.setViewName("board/boardSelect");
+		return mv;
+	}
 	
+	@GetMapping("qnaReply")
+	public ModelAndView boardReply(QnaVO qnaVO,ModelAndView mv) throws Exception{
+		mv.addObject("boardVO",qnaVO);
+		mv.addObject("path", "Reply");
+		mv.setViewName("board/boardWrite");
+		return mv;
+	}
+	
+	@PostMapping("qnaReply")
+	public ModelAndView boardReply(QnaVO qnaVO,MultipartFile[] files) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		qnaVO = qnaService.boardReply(qnaVO,files);
+		if(qnaVO==null) {
+			mv.addObject("result", "답글 작성 실패");
+			mv.addObject("path", "qnaSelect");
+		} else {
+			mv.addObject("result", "답글 작성 완료");
+			mv.addObject("path", "qnaList");
+		}
+		mv.setViewName("template/result");
+		return mv;
+	}
+	
+	@GetMapping("qnaDelete")
+	public String boardDelete(QnaVO qnaVO) throws Exception{
+		boolean result = qnaService.boardDelete(qnaVO);
+		return "qnaList";
+	}
+		
+	@GetMapping("qnaUpdate")
+	public ModelAndView boardUpdate(QnaVO qnaVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		qnaVO = qnaService.boardSelect(qnaVO);
+		mv.addObject("boardVO", qnaVO);
+		mv.addObject("path", "Update");
+		mv.setViewName("board/boardWrite");
+		return mv;
+	}
+	
+	@PostMapping("qnaUpdate")
+	public String boardUpdate(QnaVO qnaVO, ModelAndView mv, MultipartFile[] files) throws Exception{
+		qnaService.boardUpdate(qnaVO, files);
+		return "redirect:./qnaList";
+	}
 	
 	
 }

@@ -34,23 +34,20 @@ public class MemberService {
 	public MemberVO memberJoin(MemberVO memberVO, MultipartFile[] files) throws Exception{
 		
 		File file = filePathGenerator.getUseClassPathResource("/upload/member");
-		System.out.println("check1");
-		System.out.println(files.length);
 		
 		for(MultipartFile multipartFile: files) {
 			// 0KB 파일 저장되는 것 처리
 			if(multipartFile.getSize()<=0) {
 				continue;
 			}
-			System.out.println("check2");
+
 			String fileName = fileManager.saveFileCopy(multipartFile, file);
-			System.out.println("check3");
+
 			MemberFileVO memberFileVO = new MemberFileVO();
 			memberFileVO.setMemberVO(memberVO);
 			memberFileVO.setFileName(fileName);
 			memberFileVO.setOriName(multipartFile.getOriginalFilename());
 			memberVO.setMemberFileVO(memberFileVO);
-			System.out.println("save,,,");
 			memberFileVO.setMemberVO(memberVO);
 			
 			memberVO = memberRepository.save(memberVO);

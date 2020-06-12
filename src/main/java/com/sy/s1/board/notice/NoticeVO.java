@@ -28,7 +28,7 @@ public class NoticeVO extends BoardVO{
 	// fetch.EAGER	: 조회 시 noticeFileVO도 함께 가져옴
 	// fetch.LAZY	: 조회 시 NoticeVO만 불러옴, 사용 시 noticeFileVO도 불러오는 것
 	@OneToMany(mappedBy = "noticeVO", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<NoticeFileVO> noticeFileVOs;
+	private List<NoticeFileVO> boardFiles;
 	
 	
 }

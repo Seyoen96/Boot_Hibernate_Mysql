@@ -73,7 +73,7 @@ public class NoticeService {
 			noticeFileVOs.add(noticeFileVO);
 			System.out.println(fileName);
 		}
-		noticeVO.setNoticeFileVOs(noticeFileVOs);		
+		noticeVO.setBoardFiles(noticeFileVOs);		
 		return noticeRepository.save(noticeVO);
 	}
 	
