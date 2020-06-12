@@ -35,7 +35,7 @@ public class NoticeService {
 		long totalCount = noticeRepository.count();
 		
 		List<NoticeVO> ar = new ArrayList<NoticeVO>();
-		Pageable pageable = PageRequest.of((int)pager.getStartRow(), (int)pager.getPerPage(), Sort.Direction.DESC, "num");
+		Pageable pageable = PageRequest.of((int)pager.getStartRow(), (int)pager.getSize(), Sort.Direction.DESC, "num");
 		
 		if(pager.getKind().equals("writer")) {
 			ar = noticeRepository.findByWriterContainingOrderByNumDesc(pageable,pager.getSearch());
@@ -47,7 +47,7 @@ public class NoticeService {
 			ar = noticeRepository.findByTitleContainingOrderByNumDesc(pageable,pager.getSearch());
 			totalCount = noticeRepository.countByTitleContaining(pager.getSearch());
 		}		
-		pager.makePage(totalCount);
+//		pager.makePage(totalCount);
 		
 		return ar;
 	}

@@ -32,9 +32,10 @@ public class QnaService {
 		return qnaRepository.save(qnaVO);
 	}
 	
+	
 	public Page<QnaVO> boardList(Pager pager) throws Exception{
 		pager.makeRow();
-		Pageable pageable = PageRequest.of((int)pager.getStartRow(), pager.getPerPage(),Sort.by("ref").descending().and(Sort.by("step").ascending()));
+		Pageable pageable = PageRequest.of((int)pager.getStartRow(), pager.getSize(),Sort.by("ref").descending().and(Sort.by("step").ascending()));
 		
 		Page<QnaVO> page = null;
 		if(pager.getKind().equals("title")) {
@@ -44,6 +45,9 @@ public class QnaService {
 		} else {
 			page = qnaRepository.findByWriterContaining(pager.getSearch(), pageable);
 		}
+		
+		// total 페이지 갯수 받아오는 쿼리문 작성하지 않아도 됨
+		pager.makePage(page.getTotalPages());
 		
 		return page;
 	}

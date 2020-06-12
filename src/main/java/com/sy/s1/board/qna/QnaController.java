@@ -41,8 +41,12 @@ public class QnaController {
 		
 		Page<QnaVO> page = qnaService.boardList(pager);	
 		
+		// 전체 페이지의 갯수 가져오기
+		page.getTotalPages();
+		
 		int lastPage = page.getTotalPages()-1;
 		mv.addObject("page", page);
+		mv.addObject("pager", pager);
 		mv.setViewName("board/boardList");
 		
 		if(page.getNumber() > lastPage) {

@@ -21,7 +21,7 @@ span{
 <div class="container">
 	<h2> ${board} List </h2>
 	<form action="./${board}List" id="frm" class="form-inline" style="margin-bottom: 8px;">
-		<input type="hidden" name="curPage" id="p"> 
+		<input type="hidden" name="page" id="p"> 
 		 <div class="input-group input-group-sm col-xs-2">
 		    <select class="form-control" id="sel1" name ="kind">
 				   <option id="title" value="title">Title</option>
@@ -66,34 +66,23 @@ span{
 	</table>
 	
 	
-	<%-- <ul class="pagination">
+	
+	
+	<div>
+	<ul class="pagination">
 		<c:catch>
 		<c:if test="${pager.curBlock gt 1}">
-			<li><a href="./${board}List?curPage=${pager.startNum-1}">이전</a></li>
+			<li><a href="#" class="custompager" title="${pager.startNum-1}">이전</a></li>
 		</c:if>
-		<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
-				<li><a href="./${board}List?curPage=${i}">${i}</a></li>
+		<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="p">
+				<li><a href="#" class="custompager" title="${p}">${p}</a></li>
 		</c:forEach>
 		<c:if test="${pager.curBlock lt pager.totalBlock}">
-			<li><a href="./${board}List?curPage=${pager.lastNum+1}">다음</a></li>
+			<li><a href="#" class="custompager" title="${pager.lastNum+1}">다음</a></li>
 		</c:if>
 		</c:catch>
-	</ul> --%>
-	
-	
-	
-		<div style="float: left;">
-			<span><a href="#" class="pager" title="0">&lt;&lt;</a></span>
-			<span><a href="#" class="pager" title="${page.number-1}"> &lt;</a></span>
-			<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
-				
-				<c:if test="${i lt page.totalPages}">
-					<span><a href="#" class="pager" title="${i}">${i+1}</a></span>
-				</c:if>
-			</c:forEach>
-			<span><a href="#" class="pager" title="${page.number+1}">&gt;</a></span>
-			<span><a href="#" class="pager" title="${page.totalPages-1}">&gt;&gt;</a></span>
-		</div>
+	</ul>			
+	</div>
 	
 	  
 	<a href="./${board}Write" class="btn btn-danger" style="float: right;">Write</a>
@@ -102,7 +91,7 @@ span{
 
 <script type="text/javascript">
 
-	$(".pager").click(function(){
+	$(".custompager").click(function(){
 		var page=$(this).attr("title");
 		$("#p").val(page);
 		$("#frm").submit();
@@ -115,6 +104,10 @@ span{
 		$("#"+kind).prop("selected",true)
 	}
 
+
+
+
+	
 	var result = '${result}';
 	if(result != ''){
 		if(result == '1'){
