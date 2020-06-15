@@ -40,7 +40,6 @@ public class MemberService {
 			if(multipartFile.getSize()<=0) {
 				continue;
 			}
-
 			String fileName = fileManager.saveFileCopy(multipartFile, file);
 
 			MemberFileVO memberFileVO = new MemberFileVO();
@@ -54,7 +53,11 @@ public class MemberService {
 			System.out.println(fileName);
 		}
 		
-		
+		if(files[0].isEmpty()) {
+			System.out.println("사진 X");
+			memberVO = memberRepository.save(memberVO);
+		}
+
 		return memberVO;
 	}
 	

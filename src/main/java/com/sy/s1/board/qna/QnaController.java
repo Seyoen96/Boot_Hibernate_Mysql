@@ -136,5 +136,13 @@ public class QnaController {
 		return "redirect:./qnaList";
 	}
 	
+	@GetMapping("qnaRedirect")
+	public ModelAndView qnaRedirect(ModelAndView mv) throws Exception{
+		mv.addObject("result", "권한이 없습니다");
+		mv.addObject("path", "qna/qnaList");
+		mv.setViewName("template/result");
+		return mv;
+	}
+	
 	
 }

@@ -71,10 +71,10 @@ public class MemberController {
 	public ModelAndView memberJoin(@Valid MemberVO memberVO,BindingResult bindingResult, MultipartFile[] files,ModelAndView mv) throws Exception{		
 		if(memberService.memberError(memberVO, bindingResult)) {
 			// 에러 발생 시
-			mv.setViewName("member/memberJoin");
+			mv.setViewName("memberJoin");
 		} else {
 			memberVO = memberService.memberJoin(memberVO,files);
-			mv.setViewName("redirect:../");
+			mv.setViewName("redirect:/");
 		}		
 		return mv;
 	}
@@ -93,7 +93,7 @@ public class MemberController {
 			mv.setViewName("redirect:../");
 		} else {
 			mv.addObject("result", "login fail..");
-			mv.addObject("path", "member/memberLogin");
+			mv.addObject("path", "./memberLogin");
 			mv.setViewName("template/result");
 		}
 		return mv;

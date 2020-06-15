@@ -18,6 +18,7 @@ public interface QnaRepository extends JpaRepository<QnaVO, Long> {
 
 	//@Query(nativeQuery = true, value = "update qna set title=?1")
 	//@Query(value = "update QnaVO q set q.title=?1, q.contents=?2 where q.num=?3")
+	//						테이블명 대신 VO이름, 뒤에는 별칭 줘야함
 	//									숫자로 가져올 때  -> 매개변수 순서 맞춰추기
 	
 	
@@ -34,10 +35,10 @@ public interface QnaRepository extends JpaRepository<QnaVO, Long> {
 	@Query(nativeQuery = true, value = "update qna set title=?1")
 	void qnaUpdate2(String title,String contents, Long num);
 	
-	/*
-	@Query("select q QnaVO q where q.num=:num")
-	QnaVO qnaSelect(Long num);
 	
+	@Query(nativeQuery = true, value="select q QnaVO q where q.num=:num")
+	QnaVO qnaSelect(Long num);
+	/*
 	@Query("select q.title, q.writer from QnaVO q where q.num=:num")
 	Object[] qnaSelect2(Long num);
 	*/
